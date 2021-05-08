@@ -1,0 +1,29 @@
+# Makefile
+
+GLIST = glist
+PERSONA = persona
+GLISTFOLDER = GList
+PERSONAFOLDER = Persona
+GENERADORFOLDER = GeneradorDatos
+SRC = main.c
+PROGRAMASORT = sort_program
+PROGRAMAGENERADOR = generador_datos
+COMP = gcc
+ARGSCOMP = -Wall -Wextra -Werror -std=c99 -g
+
+all: $(PROGRAMASORT) $(PROGRAMAGENERADOR)
+
+$(PROGRAMAGENERADOR):
+	$(COMP) $(ARGSCOMP) -o $(PROGRAMAGENERADOR) ./$(GENERADORFOLDER)/$(SRC)
+
+$(PROGRAMASORT): $(GLIST).o $(PERSONA).o
+	$(COMP) $(ARGSCOMP) -o $(PROGRAMASORT) $(SRC) $(GLIST).o $(PERSONA).o
+
+$(GLIST).o: ./$(GLISTFOLDER)/$(GLIST).c
+	$(COMP) $(ARGSCOMP) -c ./$(GLISTFOLDER)/$(GLIST).c
+
+$(PERSONA).o: ./$(PERSONAFOLDER)/$(PERSONA).c
+	$(COMP) $(ARGSCOMP) -c ./$(PERSONAFOLDER)/$(PERSONA).c
+
+clean:
+	rm *.o
